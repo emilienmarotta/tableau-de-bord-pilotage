@@ -1,0 +1,120 @@
+version: 2
+
+models:
+  - name: fct_ventes
+    description: "Table de faits de référence : une ligne par ligne de commande, avec CA net et marge brute déjà calculés. Base de tous les autres marts de ventes pour éviter de recalculer ces KPI plusieurs fois."
+    columns:
+      - name: ligne_id
+        description: "Identifiant unique de la ligne de commande."
+        tests: [unique, not_null]
+      - name: commande_id
+        description: "Commande à laquelle appartient la ligne."
+      - name: date_commande
+        description: "Date de la commande."
+      - name: client_id
+        description: "Client ayant passé la commande."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_clients')
+                field: client_id
+      - name: region
+        description: "Région administrative du client."
+      - name: segment
+        description: "Segment commercial du client."
+      - name: produit_id
+        description: "Produit vendu sur cette ligne."
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_produits')
+                field: produit_id
+      - name: categorie
+        description: "Catégorie du produit."
+      - name: quantite
+        description: "Quantité vendue sur la ligne."
+      - name: ca_net
+        description: "CA net = somme (quantité × prix unitaire facturé × (1 − remise))."
+      - name: cout_total
+        description: "Coût total de la ligne = quantité × prix d'achat."
+      - name: marge_brute
+        description: "Marge brute (€) = CA net − somme (quantité × prix d'achat)."
+
+  - name: mart_ventes_mensuelles
+    description: "CA, marge et panier moyen agrégés par mois (une ligne par mois sur les 12 mois d'historique). Répond à : le CA et la marge progressent-ils mois après mois ?"
+    columns:
+      - name: mois
+        description: "Premier jour du mois (date_trunc('month', date_commande))."
+        tests: [unique, not_null]
+      - name: ca_net
+        description: "CA net = somme (quantité × prix unitaire facturé × (1 − remise)), pour le mois."
+      - name: marge_brute
+        description: "Marge brute (€) = CA net − somme (quantité × prix d'achat), pour le mois."
+      - name: taux_marge
+        description: "Taux de marge (%) = marge brute ÷ CA net, pour le mois."
+      - name: nb_commandes
+        description: "Nombre de commandes distinctes passées sur le mois."
+      - name: panier_moyen
+        description: "Panier moyen = CA net ÷ nombre de commandes, pour le mois."
+
+  - name: mart_performance_produits
+    description: "CA, marge et quantité vendue par produit, avec rangs CA global et par catégorie. Répond à : quels produits font le plus de CA/marge, et quels produits font perdre de la marge ?"
+    columns:
+      - name: produit_id
+        description: "Identifiant unique du produit."
+        tests: [unique, not_null]
+      - name: categorie
+        description: "Catégorie du produit."
+      - name: libelle
+        description: "Libellé du produit."
+      - name: ca_net
+        description: "CA net = somme (quantité × prix unitaire facturé × (1 − remise)), pour le produit."
+      - name: marge_brute
+        description: "Marge brute (€) = CA net − somme (quantité × prix d'achat), pour le produit."
+      - name: taux_marge
+        description: "Taux de marge (%) = marge brute ÷ CA net, pour le produit."
+      - name: quantite_vendue
+        description: "Somme des quantités vendues pour le produit."
+      - name: rang_ca_global
+        description: "Rang du produit (dense_rank) sur le CA net, toutes catégories confondues."
+      - name: rang_ca_categorie
+        description: "Rang du produit (dense_rank) sur le CA net, au sein de sa catégorie."
+
+  - name: mart_stock_sante
+    description: "Couverture de stock et statut, une ligne par produit. Répond à : quels produits vont tomber en rupture, ou dormissent en surstock ?"
+    columns:
+      - name: produit_id
+        description: "Identifiant unique du produit."
+        tests: [unique, not_null]
+      - name: libelle
+        description: "Libellé du produit."
+      - name: categorie
+        description: "Catégorie du produit."
+      - name: quantite_stock
+        description: "Quantité en stock au dernier relevé — jamais négative (voir tests/assert_stock_jamais_negatif.sql)."
+      - name: seuil_reappro
+        description: "Seuil de réapprovisionnement défini pour ce produit."
+      - name: vente_moy_jour_30j
+        description: "Ventes moyennes journalières des 30 derniers jours disponibles (sorties de stock ÷ 30)."
+      - name: couverture_jours
+        description: "Couverture de stock (jours) = quantité en stock ÷ ventes moyennes journalières des 30 derniers jours."
+      - name: statut_stock
+        description: "Statut de stock (seuils paramétrables via les vars stock_couverture_reappro_jours/stock_couverture_surstock_jours) : rupture (stock = 0) ; a_reapprovisionner (stock sous le seuil de réapprovisionnement OU couverture < 7 jours) ; surstock (couverture > 90 jours) ; ok sinon."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['rupture', 'a_reapprovisionner', 'ok', 'surstock']
+
+  - name: mart_ventes_par_region_client
+    description: "CA, marge et nombre de clients actifs par région et segment. Répond à : quelle région génère le plus de CA, et laquelle est en retard ?"
+    columns:
+      - name: region
+        description: "Région administrative du client."
+      - name: segment
+        description: "Segment commercial du client."
+      - name: ca_net
+        description: "CA net = somme (quantité × prix unitaire facturé × (1 − remise)), pour la région/segment."
+      - name: marge_brute
+        description: "Marge brute (€) = CA net − somme (quantité × prix d'achat), pour la région/segment."
+      - name: nb_clients_actifs
+        description: "Nombre de clients distincts ayant passé au moins une commande, pour la région/segment."

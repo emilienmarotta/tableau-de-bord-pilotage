@@ -1,6 +1,6 @@
 # 05 — dbt : tests et documentation
 
-**Statut :** Approved
+**Statut :** Implemented
 
 ## Objectif
 
@@ -37,8 +37,13 @@ graphe de lignage présentable sur le profil Malt.
   [01-cadrage-kpi-dashboard.md](01-cadrage-kpi-dashboard.md) — le but est que
   `dbt docs` serve de documentation KPI officielle, cohérente avec le README.
 - `dbt docs generate` + `dbt docs serve` pour vérifier localement.
-- Capture d'écran du graphe de lignage (DAG complet staging → marts) dans
-  `docs/dbt-lineage.png`.
+- Graphe de lignage (DAG complet staging → marts) dans
+  `docs/dbt-lineage.png`. Généré par un script qui lit directement
+  `target/manifest.json` (les mêmes données de lignage que `dbt docs`) et le
+  dessine avec matplotlib, plutôt qu'une capture d'écran de l'UI `dbt docs` :
+  l'environnement d'exécution n'a pas d'accès navigateur/sudo pour installer
+  Playwright+Chromium. Le contenu (nœuds + dépendances) est strictement
+  celui du DAG dbt, juste rendu autrement.
 
 ## Critères d'acceptation
 

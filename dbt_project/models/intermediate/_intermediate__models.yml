@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: int_lignes_vente_enrichies
+    description: "Une ligne par ligne de commande, enrichie des attributs produit (coût, catégorie), client (région, segment) et commande (date). Première couche où le CA net et la marge brute sont calculés."
+    columns:
+      - name: ligne_id
+        description: "Identifiant unique de la ligne de commande."
+        tests: [unique, not_null]
+      - name: commande_id
+        description: "Commande à laquelle appartient la ligne."
+      - name: date_commande
+        description: "Date de la commande."
+      - name: client_id
+        description: "Client ayant passé la commande."
+      - name: region
+        description: "Région administrative du client."
+      - name: segment
+        description: "Segment commercial du client."
+      - name: produit_id
+        description: "Produit vendu sur cette ligne."
+      - name: categorie
+        description: "Catégorie du produit."
+      - name: quantite
+        description: "Quantité vendue sur la ligne."
+      - name: prix_unitaire_facture
+        description: "Prix unitaire réellement facturé au client, avant remise."
+      - name: remise
+        description: "Taux de remise appliqué à la ligne."
+      - name: prix_achat
+        description: "Coût d'achat unitaire du produit."
+      - name: ca_net
+        description: "CA net = quantité × prix unitaire facturé × (1 − remise)."
+      - name: cout_total
+        description: "Coût total de la ligne = quantité × prix d'achat."
+      - name: marge_brute
+        description: "Marge brute (€) = CA net − coût total."

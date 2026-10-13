@@ -18,7 +18,7 @@ pour le workflow Git).
   `fct_ventes`, `mart_ventes_mensuelles`, `mart_performance_produits`,
   `mart_stock_sante`, `mart_ventes_par_region_client`. Spec :
   [04-dbt-marts.md](specs/04-dbt-marts.md).
-- [ ] **M4 — Tests et documentation dbt.** Tests génériques + personnalisés,
+- [x] **M4 — Tests et documentation dbt.** Tests génériques + personnalisés,
   documentation YAML, `dbt docs`, capture du lignage. Spec :
   [05-dbt-tests-docs.md](specs/05-dbt-tests-docs.md).
 - [ ] **M5 — Tableau de bord Metabase.** Écran principal (4 KPI + 5 blocs +
