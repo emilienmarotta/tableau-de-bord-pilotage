@@ -24,7 +24,7 @@ pour le workflow Git).
 - [x] **M5 — Tableau de bord Metabase.** Écran principal (4 KPI + 5 blocs +
   filtres), export/documentation de la configuration. Spec :
   [06-metabase-dashboard.md](specs/06-metabase-dashboard.md).
-- [ ] **M6 — Livrables portfolio Malt.** Captures, lignage, 3 lignes de
+- [x] **M6 — Livrables portfolio Malt.** Captures, lignage, 3 lignes de
   présentation, README final. Spec :
   [07-deliverables.md](specs/07-deliverables.md).
 
