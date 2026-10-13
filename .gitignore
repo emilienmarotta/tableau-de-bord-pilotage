@@ -1,0 +1,20 @@
+# secrets
+.env
+
+# données générées (garder un échantillon versionné séparément si besoin)
+data/*.csv
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# dbt
+dbt_project/target/
+dbt_project/dbt_packages/
+dbt_project/logs/
+profiles.yml
+
+# os
+.DS_Store
