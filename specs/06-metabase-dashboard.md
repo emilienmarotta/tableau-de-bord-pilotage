@@ -1,6 +1,6 @@
 # 06 — Tableau de bord Metabase
 
-**Statut :** Approved
+**Statut :** Implemented
 
 ## Objectif
 
