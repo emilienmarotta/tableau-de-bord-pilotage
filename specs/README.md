@@ -11,7 +11,7 @@ Statut possible : `Draft` (à valider) · `Approved` (prête à implémenter) ·
 | [01-cadrage-kpi-dashboard.md](01-cadrage-kpi-dashboard.md) | Questions dirigeant, définitions KPI, maquette | Approved |
 | [02-data-generator.md](02-data-generator.md) | Générateur de données fictives + chargement Postgres | Implemented |
 | [03-dbt-staging.md](03-dbt-staging.md) | Modèles dbt staging | Implemented |
-| [04-dbt-marts.md](04-dbt-marts.md) | Modèles dbt intermediate + marts | Approved |
+| [04-dbt-marts.md](04-dbt-marts.md) | Modèles dbt intermediate + marts | Implemented |
 | [05-dbt-tests-docs.md](05-dbt-tests-docs.md) | Tests dbt + documentation + lignage | Approved |
 | [06-metabase-dashboard.md](06-metabase-dashboard.md) | Dashboard Metabase | Approved |
 | [07-deliverables.md](07-deliverables.md) | Livrables portfolio Malt | Approved |

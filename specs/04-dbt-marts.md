@@ -1,6 +1,6 @@
 # 04 — dbt : intermediate et marts
 
-**Statut :** Approved
+**Statut :** Implemented
 
 ## Objectif
 

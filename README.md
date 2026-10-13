@@ -63,8 +63,8 @@ python3 -m venv .venv
 .venv/bin/python generator/generate.py --reset
 ```
 
-Puis lancer dbt (couche `staging` pour l'instant ; `intermediate`/`marts`
-arrivent au prochain milestone, voir [`ROADMAP.md`](ROADMAP.md)) :
+Puis lancer dbt (`staging` → `intermediate` → `marts`, tous les KPI calculés
+dans les marts — rien n'est recalculé côté Metabase) :
 
 ```bash
 .venv/bin/pip install -r dbt_project/requirements.txt

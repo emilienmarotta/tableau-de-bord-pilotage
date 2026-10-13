@@ -13,6 +13,12 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
+vars:
+  # Seuils de statut de stock (spec 01), centralisés ici pour ne pas être
+  # dupliqués en dur dans mart_stock_sante.
+  stock_couverture_reappro_jours: 7
+  stock_couverture_surstock_jours: 90
+
 models:
   tableau_de_bord_pilotage:
     staging:
