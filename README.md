@@ -49,7 +49,10 @@ docker compose up -d
 ```
 
 - Metabase : http://localhost:3000
-- Postgres : localhost:5432 (identifiants dans `.env`)
+- Postgres : localhost:5433 (identifiants dans `.env`) — port volontairement
+  différent du standard 5432 pour pouvoir tourner en parallèle du projet 1
+  ([rapport-commercial-auto](https://github.com/emilienmarotta/rapport-commercial-auto))
+  sans conflit.
 
 Le reste de la séquence (génération des données, build dbt) sera documenté
 ici au fil des milestones (voir [`ROADMAP.md`](ROADMAP.md)).
