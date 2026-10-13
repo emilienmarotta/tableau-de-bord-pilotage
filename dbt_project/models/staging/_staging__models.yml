@@ -1,0 +1,126 @@
+version: 2
+
+models:
+  - name: stg_clients
+    description: "Un client professionnel de la PME. Renommage/typage depuis raw.clients, aucune logique métier."
+    columns:
+      - name: client_id
+        description: "Identifiant unique du client."
+        tests: [unique, not_null]
+      - name: nom
+        description: "Raison sociale du client (donnée fictive générée par Faker)."
+      - name: region
+        description: "Région administrative française du client."
+      - name: segment
+        description: "Segment commercial du client."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['grand_compte', 'pme', 'detaillant']
+      - name: date_creation
+        description: "Date de création du client dans le référentiel."
+
+  - name: stg_produits
+    description: "Un produit du catalogue, avec son prix d'achat et son prix de vente catalogue."
+    columns:
+      - name: produit_id
+        description: "Identifiant unique du produit."
+        tests: [unique, not_null]
+      - name: libelle
+        description: "Libellé du produit."
+      - name: categorie
+        description: "Catégorie du produit (emballage, hygiène, boissons, ...)."
+      - name: prix_achat
+        description: "Coût d'achat unitaire du produit — base du calcul de la marge brute (voir specs/01-cadrage-kpi-dashboard.md)."
+      - name: prix_vente_catalogue
+        description: "Prix de vente catalogue, avant négociation éventuelle et avant remise."
+
+  - name: stg_commandes
+    description: "En-tête de commande : quel client, quelle date."
+    columns:
+      - name: commande_id
+        description: "Identifiant unique de la commande."
+        tests: [unique, not_null]
+      - name: client_id
+        description: "Client ayant passé la commande."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_clients')
+                field: client_id
+      - name: date_commande
+        description: "Date de la commande."
+
+  - name: stg_lignes_commande
+    description: "Détail d'une commande : produit, quantité, prix facturé et remise. Base du calcul du CA net et de la marge (voir int_lignes_vente_enrichies)."
+    columns:
+      - name: ligne_id
+        description: "Identifiant unique de la ligne de commande."
+        tests: [unique, not_null]
+      - name: commande_id
+        description: "Commande à laquelle appartient la ligne."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_commandes')
+                field: commande_id
+      - name: produit_id
+        description: "Produit vendu sur cette ligne."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_produits')
+                field: produit_id
+      - name: quantite
+        description: "Quantité vendue sur la ligne."
+      - name: prix_unitaire_facture
+        description: "Prix unitaire réellement facturé au client (après négociation, avant application de la remise)."
+      - name: remise
+        description: "Taux de remise appliqué à la ligne (CA net = quantité × prix_unitaire_facture × (1 − remise))."
+
+  - name: stg_stocks
+    description: "Dernier relevé de stock connu par produit."
+    columns:
+      - name: produit_id
+        description: "Produit concerné par le relevé."
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_produits')
+                field: produit_id
+      - name: quantite_stock
+        description: "Quantité en stock au moment du relevé — jamais négative (voir tests/assert_stock_jamais_negatif.sql)."
+      - name: seuil_reappro
+        description: "Seuil de réapprovisionnement défini pour ce produit, utilisé dans le calcul du statut de stock."
+      - name: date_releve
+        description: "Date du relevé de stock."
+
+  - name: stg_mouvements_stock
+    description: "Historique des entrées et sorties de stock, utilisé pour calculer la vente moyenne journalière sur 30 jours (voir mart_stock_sante)."
+    columns:
+      - name: mouvement_id
+        description: "Identifiant unique du mouvement."
+        tests: [unique, not_null]
+      - name: produit_id
+        description: "Produit concerné par le mouvement."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_produits')
+                field: produit_id
+      - name: date_mouvement
+        description: "Date du mouvement."
+      - name: quantite
+        description: "Quantité du mouvement : positive pour une entrée, négative pour une sortie."
+      - name: type_mouvement
+        description: "Type de mouvement."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['entree', 'sortie']

@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Schéma brut, chargé directement par generator/generate.py (voir specs/02-data-generator.md)."
+    schema: raw
+    tables:
+      - name: clients
+      - name: produits
+      - name: commandes
+      - name: lignes_commande
+      - name: stocks
+        # Le générateur produit un historique figé (fenêtre de dates fixe,
+        # pas relative à "aujourd'hui") pour rester reproductible à
+        # l'identique : des seuils serrés feraient échouer `dbt source
+        # freshness` au fil du temps sans rapport avec un vrai problème de
+        # chargement. Seuils volontairement larges ici, pour démontrer la
+        # fonctionnalité sans fausse alerte sur ce jeu de données de démo.
+        loaded_at_field: "date_releve::timestamp"
+        freshness:
+          warn_after: { count: 180, period: day }
+          error_after: { count: 365, period: day }
+      - name: mouvements_stock

@@ -1,0 +1,16 @@
+# Copier en profiles.yml (même dossier) et lancer dbt avec --profiles-dir dbt_project
+# (ou copier vers ~/.dbt/profiles.yml). Pas de mot de passe réel ici : les
+# valeurs par défaut correspondent à .env.example à la racine du dépôt.
+
+tableau_de_bord_pilotage:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('POSTGRES_HOST', 'localhost') }}"
+      port: "{{ env_var('POSTGRES_PORT', '5433') | as_number }}"
+      user: "{{ env_var('POSTGRES_USER', 'dashboard_user') }}"
+      password: "{{ env_var('POSTGRES_PASSWORD', 'change_me') }}"
+      dbname: "{{ env_var('POSTGRES_DB', 'tableau_de_bord') }}"
+      schema: dbt
+      threads: 4
