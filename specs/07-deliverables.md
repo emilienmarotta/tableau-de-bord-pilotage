@@ -1,6 +1,6 @@
 # 07 — Livrables pour le profil Malt
 
-**Statut :** Approved
+**Statut :** Implemented
 
 ## Objectif
 
@@ -24,11 +24,13 @@ Malt : captures, pitch, README final.
 
 ## Critères d'acceptation
 
-- [ ] Les captures sont présentes dans `docs/` et référencées dans le README.
-- [ ] Le README se lit de bout en bout sans renvoyer ailleurs pour comprendre
+- [x] Les captures sont présentes dans `docs/` et référencées dans le README.
+- [x] Le README se lit de bout en bout sans renvoyer ailleurs pour comprendre
   l'essentiel (les specs restent la référence détaillée, pas un prérequis de
   lecture).
-- [ ] Les 3 lignes de présentation sont écrites et prêtes à copier sur le
+- [x] Les 3 lignes de présentation sont écrites et prêtes à copier sur le
   profil Malt.
 - [ ] Tous les critères de réussite globaux de
-  [00-vision.md](00-vision.md) sont cochés.
+  [00-vision.md](00-vision.md) sont cochés (reste la lecture en 30s testée
+  avec une personne extérieure — validation humaine hors de portée de cette
+  session, à faire par l'utilisateur).

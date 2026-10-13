@@ -82,15 +82,19 @@ modélisation dbt qu'il est censé démontrer.
 
 ## Critères de réussite globaux
 
-- [ ] `docker compose up` lance Postgres et Metabase sans erreur.
-- [ ] `dbt build` s'exécute de bout en bout : tous les modèles et tous les
-  tests passent.
-- [ ] Les KPI du tableau de bord correspondent aux définitions du README
-  (vérifiés sur quelques cas calculés à la main).
+- [x] `docker compose up` lance Postgres et Metabase sans erreur.
+- [x] `dbt build` s'exécute de bout en bout : tous les modèles et tous les
+  tests passent (51/51 au 2026-10-13).
+- [x] Les KPI du tableau de bord correspondent aux définitions du README
+  (vérifiés sur quelques cas calculés à la main — CA net, marge brute, taux
+  de marge de septembre 2026 et nombre de produits en alerte stock,
+  recoupés par requête SQL directe sur les marts, identiques aux chiffres
+  affichés dans Metabase).
 - [ ] Le tableau de bord se lit en 30 secondes (testé avec une personne
-  extérieure au projet si possible).
-- [ ] `dbt docs` est généré et le graphe de lignage est capturé.
-- [ ] README, captures et 3 lignes de présentation prêts pour le profil Malt.
+  extérieure au projet si possible) — validation humaine, à faire par
+  l'utilisateur.
+- [x] `dbt docs` est généré et le graphe de lignage est capturé.
+- [x] README, captures et 3 lignes de présentation prêts pour le profil Malt.
 
 ## Risques identifiés
 

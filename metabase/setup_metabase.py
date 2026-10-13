@@ -325,22 +325,39 @@ def main():
     def mapping(param, card_key, field_id):
         return {"parameter_id": param["id"], "card_id": cards[card_key], "target": ["dimension", f(field_id)]}
 
+    # Les questions sous-jacentes gardent le préfixe "Pilotage — " (utile pour
+    # les identifier dans la liste des questions Metabase et pour le nettoyage
+    # idempotent par préfixe). Sur le dashboard, le préfixe est redondant
+    # (déjà dans le titre de l'écran) et fait tronquer les titres des petites
+    # cartes du bandeau : on l'enlève via l'override "card.title" par dashcard.
+    def titled(title):
+        return {"card.title": title}
+
     dashcards = [
         # Bandeau (row 0, hauteur 3)
         {"id": -1, "card_id": cards["ca_mois"], "row": 0, "col": 0, "size_x": 5, "size_y": 3,
+         "visualization_settings": titled("CA du mois"),
          "parameter_mappings": [mapping(param_periode, "ca_mois", ventes["mois"])]},
         {"id": -2, "card_id": cards["marge_mois"], "row": 0, "col": 5, "size_x": 5, "size_y": 3,
+         "visualization_settings": titled("Marge brute du mois"),
          "parameter_mappings": [mapping(param_periode, "marge_mois", ventes["mois"])]},
         {"id": -3, "card_id": cards["taux_marge_mois"], "row": 0, "col": 10, "size_x": 4, "size_y": 3,
+         "visualization_settings": titled("Taux de marge du mois"),
          "parameter_mappings": [mapping(param_periode, "taux_marge_mois", ventes["mois"])]},
         {"id": -4, "card_id": cards["panier_moyen_mois"], "row": 0, "col": 14, "size_x": 5, "size_y": 3,
+         "visualization_settings": titled("Panier moyen du mois"),
          "parameter_mappings": [mapping(param_periode, "panier_moyen_mois", ventes["mois"])]},
         {"id": -5, "card_id": cards["produits_alerte"], "row": 0, "col": 19, "size_x": 5, "size_y": 3,
+         "visualization_settings": titled("Produits en alerte stock"),
          "parameter_mappings": []},
         # Évolution + marge par catégorie (row 3, hauteur 8)
         {"id": -6, "card_id": cards["evolution"], "row": 3, "col": 0, "size_x": 12, "size_y": 8,
+         "visualization_settings": {**titled("Évolution CA & marge (12 mois)"),
+                                     "graph.dimensions": ["mois"], "graph.metrics": ["ca_net", "marge_brute"]},
          "parameter_mappings": [mapping(param_periode, "evolution", ventes["mois"])]},
         {"id": -7, "card_id": cards["marge_categorie"], "row": 3, "col": 12, "size_x": 12, "size_y": 8,
+         "visualization_settings": {**titled("Marge brute par catégorie"),
+                                     "graph.dimensions": ["categorie"], "graph.metrics": ["sum"]},
          "parameter_mappings": [
              mapping(param_periode, "marge_categorie", fct["date_commande"]),
              mapping(param_categorie, "marge_categorie", fct["categorie"]),
@@ -348,13 +365,17 @@ def main():
          ]},
         # Top 10 + santé des stocks (row 11, hauteur 8 puis 4+4)
         {"id": -8, "card_id": cards["top10"], "row": 11, "col": 0, "size_x": 12, "size_y": 8,
+         "visualization_settings": titled("Top 10 produits (CA + taux de marge)"),
          "parameter_mappings": [mapping(param_categorie, "top10", perf["categorie"])]},
         {"id": -9, "card_id": cards["stock_donut"], "row": 11, "col": 12, "size_x": 12, "size_y": 4,
+         "visualization_settings": titled("Répartition des statuts de stock"),
          "parameter_mappings": [mapping(param_categorie, "stock_donut", stock["categorie"])]},
         {"id": -10, "card_id": cards["stock_critique"], "row": 15, "col": 12, "size_x": 12, "size_y": 4,
+         "visualization_settings": titled("Produits critiques (rupture / à réapprovisionner)"),
          "parameter_mappings": [mapping(param_categorie, "stock_critique", stock["categorie"])]},
         # CA par région (row 19, pleine largeur)
         {"id": -11, "card_id": cards["ca_region"], "row": 19, "col": 0, "size_x": 24, "size_y": 6,
+         "visualization_settings": {**titled("CA par région"), "graph.dimensions": ["region"], "graph.metrics": ["sum"]},
          "parameter_mappings": [mapping(param_region, "ca_region", region["region"])]},
     ]
 
