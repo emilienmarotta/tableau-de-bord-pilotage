@@ -21,7 +21,7 @@ pour le workflow Git).
 - [x] **M4 — Tests et documentation dbt.** Tests génériques + personnalisés,
   documentation YAML, `dbt docs`, capture du lignage. Spec :
   [05-dbt-tests-docs.md](specs/05-dbt-tests-docs.md).
-- [ ] **M5 — Tableau de bord Metabase.** Écran principal (4 KPI + 5 blocs +
+- [x] **M5 — Tableau de bord Metabase.** Écran principal (4 KPI + 5 blocs +
   filtres), export/documentation de la configuration. Spec :
   [06-metabase-dashboard.md](specs/06-metabase-dashboard.md).
 - [ ] **M6 — Livrables portfolio Malt.** Captures, lignage, 3 lignes de

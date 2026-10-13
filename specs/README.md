@@ -13,7 +13,7 @@ Statut possible : `Draft` (à valider) · `Approved` (prête à implémenter) ·
 | [03-dbt-staging.md](03-dbt-staging.md) | Modèles dbt staging | Implemented |
 | [04-dbt-marts.md](04-dbt-marts.md) | Modèles dbt intermediate + marts | Implemented |
 | [05-dbt-tests-docs.md](05-dbt-tests-docs.md) | Tests dbt + documentation + lignage | Implemented |
-| [06-metabase-dashboard.md](06-metabase-dashboard.md) | Dashboard Metabase | Approved |
+| [06-metabase-dashboard.md](06-metabase-dashboard.md) | Dashboard Metabase | Implemented |
 | [07-deliverables.md](07-deliverables.md) | Livrables portfolio Malt | Approved |
 
 Ordre d'implémentation recommandé : 00/01 → 02 → 03 → 04 → 05 → 06 → 07
