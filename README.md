@@ -54,8 +54,17 @@ docker compose up -d
   ([rapport-commercial-auto](https://github.com/emilienmarotta/rapport-commercial-auto))
   sans conflit.
 
-Le reste de la séquence (génération des données, build dbt) sera documenté
-ici au fil des milestones (voir [`ROADMAP.md`](ROADMAP.md)).
+Puis générer les données fictives (schéma `raw`, 12 mois d'historique,
+reproductible à l'identique grâce à une graine fixe) :
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r generator/requirements.txt
+.venv/bin/python generator/generate.py --reset
+```
+
+Le build dbt (staging → marts) sera documenté ici au fil des prochains
+milestones (voir [`ROADMAP.md`](ROADMAP.md)).
 
 ## Structure du dépôt
 

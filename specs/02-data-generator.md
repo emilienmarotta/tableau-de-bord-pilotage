@@ -1,6 +1,6 @@
 # 02 — Générateur de données fictives
 
-**Statut :** Approved
+**Statut :** Implemented
 
 ## Objectif
 

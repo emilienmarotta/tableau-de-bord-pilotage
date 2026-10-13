@@ -9,7 +9,7 @@ pour le workflow Git).
   maquette du dashboard. Specs :
   [00-vision.md](specs/00-vision.md),
   [01-cadrage-kpi-dashboard.md](specs/01-cadrage-kpi-dashboard.md).
-- [ ] **M1 — Générateur de données fictives.** Clients, produits, commandes,
+- [x] **M1 — Générateur de données fictives.** Clients, produits, commandes,
   lignes de commande, stocks, mouvements de stock, chargés dans le schéma
   `raw` de Postgres. Spec : [02-data-generator.md](specs/02-data-generator.md).
 - [ ] **M2 — dbt staging.** Un `stg_*` par source, sources + tests de

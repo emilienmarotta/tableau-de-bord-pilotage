@@ -9,7 +9,7 @@ Statut possible : `Draft` (à valider) · `Approved` (prête à implémenter) ·
 |---|---|---|
 | [00-vision.md](00-vision.md) | Vision, contraintes, critères de réussite globaux | Approved |
 | [01-cadrage-kpi-dashboard.md](01-cadrage-kpi-dashboard.md) | Questions dirigeant, définitions KPI, maquette | Approved |
-| [02-data-generator.md](02-data-generator.md) | Générateur de données fictives + chargement Postgres | Approved |
+| [02-data-generator.md](02-data-generator.md) | Générateur de données fictives + chargement Postgres | Implemented |
 | [03-dbt-staging.md](03-dbt-staging.md) | Modèles dbt staging | Approved |
 | [04-dbt-marts.md](04-dbt-marts.md) | Modèles dbt intermediate + marts | Approved |
 | [05-dbt-tests-docs.md](05-dbt-tests-docs.md) | Tests dbt + documentation + lignage | Approved |
