@@ -14,7 +14,7 @@ pour le workflow Git).
   `raw` de Postgres. Spec : [02-data-generator.md](specs/02-data-generator.md).
 - [x] **M2 — dbt staging.** Un `stg_*` par source, sources + tests de
   fraîcheur. Spec : [03-dbt-staging.md](specs/03-dbt-staging.md).
-- [ ] **M3 — dbt intermediate et marts.** `int_lignes_vente_enrichies`,
+- [x] **M3 — dbt intermediate et marts.** `int_lignes_vente_enrichies`,
   `fct_ventes`, `mart_ventes_mensuelles`, `mart_performance_produits`,
   `mart_stock_sante`, `mart_ventes_par_region_client`. Spec :
   [04-dbt-marts.md](specs/04-dbt-marts.md).
