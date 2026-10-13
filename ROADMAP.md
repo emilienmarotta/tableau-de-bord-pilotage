@@ -12,7 +12,7 @@ pour le workflow Git).
 - [x] **M1 — Générateur de données fictives.** Clients, produits, commandes,
   lignes de commande, stocks, mouvements de stock, chargés dans le schéma
   `raw` de Postgres. Spec : [02-data-generator.md](specs/02-data-generator.md).
-- [ ] **M2 — dbt staging.** Un `stg_*` par source, sources + tests de
+- [x] **M2 — dbt staging.** Un `stg_*` par source, sources + tests de
   fraîcheur. Spec : [03-dbt-staging.md](specs/03-dbt-staging.md).
 - [ ] **M3 — dbt intermediate et marts.** `int_lignes_vente_enrichies`,
   `fct_ventes`, `mart_ventes_mensuelles`, `mart_performance_produits`,

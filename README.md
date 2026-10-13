@@ -63,8 +63,14 @@ python3 -m venv .venv
 .venv/bin/python generator/generate.py --reset
 ```
 
-Le build dbt (staging → marts) sera documenté ici au fil des prochains
-milestones (voir [`ROADMAP.md`](ROADMAP.md)).
+Puis lancer dbt (couche `staging` pour l'instant ; `intermediate`/`marts`
+arrivent au prochain milestone, voir [`ROADMAP.md`](ROADMAP.md)) :
+
+```bash
+.venv/bin/pip install -r dbt_project/requirements.txt
+cp dbt_project/profiles.yml.example dbt_project/profiles.yml
+cd dbt_project && ../.venv/bin/dbt build --profiles-dir .
+```
 
 ## Structure du dépôt
 
